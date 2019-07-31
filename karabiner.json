@@ -8,8 +8,10 @@
         {
             "complex_modifications": {
                 "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 300
+                    "basic.to_if_alone_timeout_milliseconds": 300,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
                 },
                 "rules": [
                     {
@@ -43,6 +45,30 @@
                                 "to_if_alone": [
                                     {
                                         "key_code": "d"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "vi_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    },
+                                    {
+                                        "name": "vi_visual_mode",
+                                        "type": "variable_if",
+                                        "value": 0
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {}
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar"
                                     }
                                 ],
                                 "type": "basic"
@@ -2034,7 +2060,7 @@
                         ]
                     },
                     {
-                        "description": "left command for iterm",
+                        "description": "caps_lock for left control",
                         "manipulators": [
                             {
                                 "from": {
@@ -2090,134 +2116,142 @@
                     {
                         "description": "tab + hjkl to switch pane in tmux",
                         "manipulators": [
-                          {
-                            "conditions": [
-                              {
-                                "type": "frontmost_application_if",
-                                "bundle_identifiers": [
-                                  "^com\\.googlecode\\.iterm2$"
-                                ]
-                              },
-                              {
-                                "name": "tab_mode",
-                                "type": "variable_if",
-                                "value": 1
-                              }
-                            ],
-                            "from": {
-                              "key_code": "h",
-                              "modifiers": {
-                                "optional": [
-                                  "any"
-                                ]
-                              }
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.googlecode\\.iterm2$",
+                                            "net.kovidgoyal.kitty",
+                                            "io.alacritty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    },
+                                    {
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "h",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             },
-                            "to": [
-                              {
-                                "key_code": "h",
-                                "modifiers": [
-                                  "left_option"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "conditions": [
-                              {
-                                "type": "frontmost_application_if",
-                                "bundle_identifiers": [
-                                  "^com\\.googlecode\\.iterm2$"
-                                ]
-                              },
-                              {
-                                "name": "tab_mode",
-                                "type": "variable_if",
-                                "value": 1
-                              }
-                            ],
-                            "from": {
-                              "key_code": "j",
-                              "modifiers": {
-                                "optional": [
-                                  "any"
-                                ]
-                              }
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.googlecode\\.iterm2$",
+                                            "net.kovidgoyal.kitty",
+                                            "io.alacritty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    },
+                                    {
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "j",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             },
-                            "to": [
-                              {
-                                "key_code": "j",
-                                "modifiers": [
-                                  "left_option"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "conditions": [
-                              {
-                                "type": "frontmost_application_if",
-                                "bundle_identifiers": [
-                                  "^com\\.googlecode\\.iterm2$"
-                                ]
-                              },
-                              {
-                                "name": "tab_mode",
-                                "type": "variable_if",
-                                "value": 1
-                              }
-                            ],
-                            "from": {
-                              "key_code": "k",
-                              "modifiers": {
-                                "optional": [
-                                  "any"
-                                ]
-                              }
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.googlecode\\.iterm2$",
+                                            "net.kovidgoyal.kitty",
+                                            "io.alacritty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    },
+                                    {
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "k",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             },
-                            "to": [
-                              {
-                                "key_code": "k",
-                                "modifiers": [
-                                  "left_option"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "conditions": [
-                              {
-                                "type": "frontmost_application_if",
-                                "bundle_identifiers": [
-                                  "^com\\.googlecode\\.iterm2$"
-                                ]
-                              },
-                              {
-                                "name": "tab_mode",
-                                "type": "variable_if",
-                                "value": 1
-                              }
-                            ],
-                            "from": {
-                              "key_code": "l",
-                              "modifiers": {
-                                "optional": [
-                                  "any"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "l",
-                                "modifiers": [
-                                  "left_option"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          }
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.googlecode\\.iterm2$",
+                                            "net.kovidgoyal.kitty",
+                                            "io.alacritty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    },
+                                    {
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "l",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
                         ]
                     },
                     {
@@ -2252,12 +2286,46 @@
                         ]
                     },
                     {
-                        "description": " - launch mode, c for chrome",
+                        "description": "tab + i to call out clipboard",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "name": "launch_mode",
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "i",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "o",
+                                        "modifiers": [
+                                            "left_command",
+                                            "left_control",
+                                            "left_option",
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "tab + c to ctrl + c",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_mode",
                                         "type": "variable_if",
                                         "value": 1
                                     }
@@ -2272,7 +2340,38 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"chrome\"'"
+                                        "key_code": "c",
+                                        "modifiers": [
+                                            "left_control"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - launch mode, q for quiver",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "launch_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "q",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"quiver\"'"
                                     },
                                     {
                                         "set_variable": {
@@ -2306,75 +2405,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"wechat\"'"
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "launch_mode",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": " - launch mode, m for mongo",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "launch_mode",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "m",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"mongo\"'"
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "launch_mode",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": " - launch mode, r for rss",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "launch_mode",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"rss\"'"
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"wechat\"'"
                                     },
                                     {
                                         "set_variable": {
@@ -2408,7 +2439,143 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Alfred 3\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"email\"'"
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"email\"'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "launch_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - launch mode, r for rss",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "launch_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"rss\"'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "launch_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - launch mode, t for things",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "launch_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"things\"'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "launch_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - launch mode, c for chrome",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "launch_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "c",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"chrome\"'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "launch_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - launch mode, m for mongo",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "launch_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "m",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"launch app\" in workflow \"launchMode\" with argument \"mongo\"'"
                                     },
                                     {
                                         "set_variable": {
@@ -2444,6 +2611,102 @@
                                     {
                                         "set_variable": {
                                             "name": "launch_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "tab + f to function mode",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "function_mode",
+                                            "value": 1
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - function mode, f for YouDao Translate",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "function_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f",
+                                    "modifiers": {
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"ggg\" in workflow \"Youdao Translate\"'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "function_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": " - function mode, any key to cancel for function mode (put related function mode settings above this rule)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "function_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "any": "key_code",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "function_mode",
                                             "value": 0
                                         }
                                     }
@@ -2567,6 +2830,7 @@
             ],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
+                "country_code": 0,
                 "keyboard_type": "ansi"
             }
         }
